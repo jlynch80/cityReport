@@ -1,0 +1,17 @@
+<head>
+    <title>CityReport</title>
+</head>
+<body>
+{{> flashMessages}}
+{{> takePhoto}}
+</body>
+
+<template name="takePhoto">
+    <div>{{data.location.lat}}</div>
+    <div>
+            <img  class="preview" src="{{photo}}">
+    </div>
+    <div><input type="button" class="capture" value="Take Photo"></div>
+    <div class="divDescription"><textarea class="description" placeholder="Describe the issue you are reporting."></textarea></div>
+    <div><input type="button" class="report" value="Send"></div>
+</template>
