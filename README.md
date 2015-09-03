@@ -1,4 +1,6 @@
 # CityReport
+
+[![Join the chat at https://gitter.im/jlynch80/cityReport](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jlynch80/cityReport?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Report city issues
 
 Written using [Meteor](http://www.meteor.com).
