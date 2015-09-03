@@ -3,6 +3,8 @@ Report city issues
 
 Written using [Meteor](http://www.meteor.com).
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jlynch80/cityReport?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 A simple app that allows users to take pictures of issues in their city like potholes, graffiti, flooded areas, damaged street signs, etc. and report them to those in charge of maintaining the city. The app will record the current location when the picture is taken and send the picture and location, along with a brief description, to the backend which would then be accessible by those who will dispatch and confirm the resolution of the issue. 
 
 Todo:
