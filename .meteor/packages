@@ -15,3 +15,5 @@ cfs:filesystem
 cfs:gridfs
 cfs:standard-packages
 mrt:flash-messages
+mrt:moment
+twbs:bootstrap

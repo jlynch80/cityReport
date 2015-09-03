@@ -1,11 +1,3 @@
-Reports = new Mongo.Collection("reports");
-
-var imageStore = new FS.Store.GridFS("images");
-
-Images = new FS.Collection("images", {
-    stores: [imageStore]
-});
-
 if (Meteor.isClient) {
     Template.takePhoto.events({
         'click .capture': function () {
@@ -25,10 +17,12 @@ if (Meteor.isClient) {
 
             var description = template.find('.description').value;
             var location = Session.get('location');
+            var photo = Session.get('photo');
 
             //console.log(imagesURL);
             console.log("Description: " + description);
-            console.log("Location: " + location);
+            console.log("Location: " + location.lat + ", " + location.lng);
+            console.log("Inserting report...");
 
             var report = Reports.insert({
                 description: description,
@@ -36,24 +30,21 @@ if (Meteor.isClient) {
                 created_at: new Date
             });
 
-            FS.Utility.eachFile(event, function(file) {
+            console.log('Inserting image...');
 
-                Images.insert(file, function (err, fileObj) {
-                    if (err){
-                        // handle error
-                    } else {
-                        // handle success depending what you need to do
-                        var imagesURL = {
-                            "report.image": "/cfs/files/images/" + fileObj._id
-                        };
-                        Reports.update(report._id, {$set: imagesURL});
+            Images.insert(photo, function (err, photoObj) {
+                if (err){
+                    // handle error
+                    console.log("Error: " + err);
+                } else {
+                    // handle success depending what you need to do
+                    var imagesURL = {
+                        "report.image": "/cfs/files/images/" + photoObj._id
+                    };
+                    Reports.update(report._id, {$set: imagesURL});
+                }
 
-                    }
-
-                });
             });
-
-            FlashMessages.sendSuccess("Report sent.");
 
         }
     });
@@ -61,6 +52,9 @@ if (Meteor.isClient) {
     Template.takePhoto.helpers({
         'photo': function () {
             return Session.get('photo');
+        },
+        'location': function () {
+            return Session.get('location');
         }
     });
 }
@@ -68,6 +62,14 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
     Meteor.startup(function () {
         // code to run on server at startup
+    });
+
+    Reports = new Mongo.Collection("reports");
+
+    var imageStore = new FS.Store.GridFS("images");
+
+    Images = new FS.Collection("images", {
+        stores: [imageStore]
     });
 
     Images.deny({
@@ -86,6 +88,36 @@ if (Meteor.isServer) {
     });
 
     Images.allow({
+        insert: function(){
+            return true;
+        },
+        update: function(){
+            return true;
+        },
+        remove: function(){
+            return true;
+        },
+        download: function(){
+            return true;
+        }
+    });
+
+    Reports.deny({
+        insert: function(){
+            return false;
+        },
+        update: function(){
+            return false;
+        },
+        remove: function(){
+            return false;
+        },
+        download: function(){
+            return false;
+        }
+    });
+
+    Reports.allow({
         insert: function(){
             return true;
         },

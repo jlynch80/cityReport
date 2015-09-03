@@ -1,12 +1,16 @@
 <head>
     <title>CityReport</title>
 </head>
-<body>s
+<body>
 {{> takePhoto}}
 </body>
 
 <template name="takePhoto">
-    <div>{{location.lat}},{{location.lng}}</div>
+    <div>
+        {{#if location}}
+            {{location.lat}},{{location.lng}}
+        {{/if}}
+    </div>
     <div>
             <img  class="preview" src="{{photo}}">
     </div>
