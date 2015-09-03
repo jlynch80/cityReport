@@ -1,13 +1,12 @@
 <head>
     <title>CityReport</title>
 </head>
-<body>
-{{> flashMessages}}
+<body>s
 {{> takePhoto}}
 </body>
 
 <template name="takePhoto">
-    <div>{{data.location.lat}}</div>
+    <div>{{location.lat}},{{location.lng}}</div>
     <div>
             <img  class="preview" src="{{photo}}">
     </div>
