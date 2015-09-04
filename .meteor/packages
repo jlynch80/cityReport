@@ -17,3 +17,5 @@ cfs:standard-packages
 mrt:flash-messages
 mrt:moment
 twbs:bootstrap
+cfs:s3
+cfs:graphicsmagick

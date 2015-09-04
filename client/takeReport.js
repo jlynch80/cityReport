@@ -32,18 +32,9 @@ if (Meteor.isClient) {
 
             console.log('Inserting image...');
 
-            Images.insert(photo, function (err, photoObj) {
-                if (err){
-                    // handle error
-                    console.log("Error: " + err);
-                } else {
-                    // handle success depending what you need to do
-                    var imagesURL = {
-                        "report.image": "/cfs/files/images/" + photoObj._id
-                    };
-                    Reports.update(report._id, {$set: imagesURL});
-                }
-
+            Images.insert(photo, function (err, fileObj) {
+                // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+                Reports.update(report,{image: fileObj._id});
             });
 
         }
@@ -63,72 +54,72 @@ if (Meteor.isServer) {
     Meteor.startup(function () {
         // code to run on server at startup
     });
-
-    Reports = new Mongo.Collection("reports");
-
-    var imageStore = new FS.Store.GridFS("images");
-
-    Images = new FS.Collection("images", {
-        stores: [imageStore]
-    });
-
-    Images.deny({
-        insert: function(){
-            return false;
-        },
-        update: function(){
-            return false;
-        },
-        remove: function(){
-            return false;
-        },
-        download: function(){
-            return false;
-        }
-    });
-
-    Images.allow({
-        insert: function(){
-            return true;
-        },
-        update: function(){
-            return true;
-        },
-        remove: function(){
-            return true;
-        },
-        download: function(){
-            return true;
-        }
-    });
-
-    Reports.deny({
-        insert: function(){
-            return false;
-        },
-        update: function(){
-            return false;
-        },
-        remove: function(){
-            return false;
-        },
-        download: function(){
-            return false;
-        }
-    });
-
-    Reports.allow({
-        insert: function(){
-            return true;
-        },
-        update: function(){
-            return true;
-        },
-        remove: function(){
-            return true;
-        },
-        download: function(){
-            return true;
-        }
-    });
+    //
+    //Reports = new Mongo.Collection("reports");
+    //
+    //var imageStore = new FS.Store.GridFS("images");
+    //
+    //Images = new FS.Collection("images", {
+    //    stores: [imageStore]
+    //});
+    //
+    //Images.deny({
+    //    insert: function(){
+    //        return false;
+    //    },
+    //    update: function(){
+    //        return false;
+    //    },
+    //    remove: function(){
+    //        return false;
+    //    },
+    //    download: function(){
+    //        return false;
+    //    }
+    //});
+    //
+    //Images.allow({
+    //    insert: function(){
+    //        return true;
+    //    },
+    //    update: function(){
+    //        return true;
+    //    },
+    //    remove: function(){
+    //        return true;
+    //    },
+    //    download: function(){
+    //        return true;
+    //    }
+    //});
+    //
+    //Reports.deny({
+    //    insert: function(){
+    //        return false;
+    //    },
+    //    update: function(){
+    //        return false;
+    //    },
+    //    remove: function(){
+    //        return false;
+    //    },
+    //    download: function(){
+    //        return false;
+    //    }
+    //});
+    //
+    //Reports.allow({
+    //    insert: function(){
+    //        return true;
+    //    },
+    //    update: function(){
+    //        return true;
+    //    },
+    //    remove: function(){
+    //        return true;
+    //    },
+    //    download: function(){
+    //        return true;
+    //    }
+    //});
 }
